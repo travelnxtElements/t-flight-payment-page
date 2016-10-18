@@ -18,7 +18,8 @@
     "t-shared-lib": "travelnxtElements/t-shared-lib#^1.0.0",
     "t-loader": "atomelements/t-loader#^1.0.0",
     "t-policy": "travelnxtelements/t-policy#^1.0.0",
-    "t-behavior": "travelnxtelements/t-behavior#^1.0.0"
+    "t-behavior": "travelnxtelements/t-behavior#^1.0.0",
+    "t-flight-translator": "travelnxtelements/t-flight-translator#master"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
