@@ -17,6 +17,7 @@
 <link rel="import" href="../t-policy/t-policy.html">
 <link rel="import" href="../t-behavior/t-page-behavior.html">
 <link rel="import" href="../t-flight-translator/t-flight-book-translator.html">
+<link rel="import" href="../t-behavior/t-flight-page-behavior.html">
 <link rel="import" href="../t-behavior/t-session-behavior.html"/>
 
 <dom-module id="t-flight-payment-page">
@@ -66,10 +67,7 @@
     <t-itinerary
       id="flightItinerary"
       show-twelve-hour-clock="[[hasAmPmTimeFormat]]"
-      flight-data="[[itinerary.legs]]"
-      base-api-url="[[apiBaseUrl]]"
-      auth-token="[[authToken]]"
-      search-id="[[searchId]]">
+      flight-data="[[itinerary.legs]]">
     </t-itinerary>
 
     <t-section-header
@@ -93,7 +91,7 @@
       id="fareDetails"
       is-collapsible
       data="[[itinerary.fare.components]]"
-      passenger-details="[[passengerDetails.passengerList]]"
+      passenger-details="[[_farePaxData]]"
       itinerary-fare-label="[[_itineraryFareLabel]]">
     </t-faredetails>
 
@@ -180,7 +178,8 @@
           TravelNxt.Behaviors.PageLoadBehavior,
           TravelNxt.Behaviors.DateBehavior,
           TravelNxt.Behaviors.PageBehavior,
-          TravelNxt.Behaviors.SessionBehavior
+          TravelNxt.Behaviors.SessionBehavior,
+          TravelNxt.Behaviors.FlightPageBehavior
         ],
 
         properties: {
@@ -194,19 +193,27 @@
           },
 
           _processingMsg: {
-              type: Boolean,
-              value: false
+            type: Boolean,
+            value: false
           },
 
           _longProcessingMsg: {
-              type: Boolean,
-              value: true
+            type: Boolean,
+            value: true
           },
 
           _showFullPageLoader: {
-              type: Boolean,
-              value: false
-          }
+            type: Boolean,
+            value: false
+          },
+
+          _itineraryFareLabel: {
+            type: String,
+            value: 'One Way Trip Fare'
+          },
+
+          _farePaxData: Object
+
         },
 
         observers: [
@@ -259,6 +266,9 @@
             if (this.$$('#address')) {
                 this._countryCall();
             }
+
+            this._farePaxData = this._getPassengerDetails();
+            this._itineraryFareLabel = this._getItineraryFareLabel();
         },
 
         _countryCall: function () {
