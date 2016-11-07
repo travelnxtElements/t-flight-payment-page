@@ -1,5 +1,9 @@
 {
   "name": "t-flight-payment-page",
+  "version": "0.0.0",
+  "authors": [
+    "Ganesh Ratnaparkhi <ganeshr43@gmail.com>"
+  ],
   "description": "This is page component for flight payment page",
   "main": "t-flight-payment-page.html",
   "dependencies": {
